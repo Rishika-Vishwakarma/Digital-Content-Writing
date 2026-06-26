@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Content Writing</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Our CSS files -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ============================================
+     NAVBAR (shown after login)
+     ============================================ -->
+    <nav id="nav">
+        <div class="nbrand" onclick="goHome()">Digital <span>Content Writing</span></div>
+        <div class="nlinks">
+            <button class="nl active" id="nl-home" onclick="goHome()">Home</button>
+            <button class="nl" id="nl-explore" onclick="showPage('explore')">Explore</button>
+            <button class="nl" id="nl-about" onclick="showPage('about')">About</button>
+            <button class="nl" id="nl-dashboard" style="display:none" onclick="showDash()">Dashboard</button>
+            <button class="nl" id="nl-cdash" style="display:none" onclick="showPage('cdash')">My Hub</button>
+            <button class="nl" id="nl-admin" style="display:none" onclick="showPage('admin')">Admin</button>
+        </div>
+        <div class="nright">
+            <!-- Chat button with unread badge -->
+            <button class="btn btn-gh btn-sm" id="nav-chat" style="display:none" onclick="showPage('chat')">
+      💬 Chat
+      <span id="cbadge" style="display:none; background:#dc2626; color:#fff; border-radius:9px; padding:0 5px; font-size:9px; margin-left:2px;"></span>
+    </button>
+            <!-- User chip (click to go to profile) -->
+            <div class="nchip" onclick="showPage('profile')" id="nchip">
+                <div class="nav-av" id="nav-av"><span id="nav-avl">?</span></div>
+                <span id="nav-un">Guest</span>
+            </div>
+            <button class="btn btn-gh btn-sm" id="nav-out" style="display:none" onclick="doLogout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ============================================
+     PAGE: LOGIN
+     ============================================ -->
+    <div class="page active" id="page-login">
+        <div style="display:flex; min-height:100vh;">
+            <!-- Left branding panel -->
+            <div class="al">
+                <div class="abrand">Digital <span>Content Writing</span></div>
+                <div class="atagline">Where words meet the world.<br/>45+ articles, blogs &amp; content waiting for you.</div>
+                <div class="afeats">
+                    <div class="afeat">
+                        <div class="afeat-ic">✍️</div>
+                        <div class="afeat-tx"><strong>Publish Your Stories</strong>Articles, blogs &amp; content.</div>
+                    </div>
+                    <div class="afeat">
+                        <div class="afeat-ic">💬</div>
+                        <div class="afeat-tx"><strong>Chat &amp; Collaborate</strong>Clients hire writers directly.</div>
+                    </div>
+                    <div class="afeat">
+                        <div class="afeat-ic">⏱️</div>
+                        <div class="afeat-tx"><strong>Timeline Tracking</strong>Set project deadlines easily.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right form panel -->
+            <div class="ar">
+                <h2 class="atitle">Welcome back</h2>
+                <p class="asub">Sign in to your account</p>
+                <div id="li-msg"></div>
+                <div class="fg">
+                    <label class="fl">Username</label>
+                    <input class="fi" id="li-u" placeholder="Enter username" onkeydown="if(event.key==='Enter') doLogin()" />
+                </div>
+                <div class="fg">
+                    <label class="fl">Password</label>
+                    <input class="fi" type="password" id="li-p" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()" />
+                </div>
+                <button class="btn btn-p" style="width:100%; justify-content:center; padding:12px;" onclick="doLogin()">
+                  Sign In →
+                </button>
+                <div class="alink">No account? <a onclick="showPage('signup')">Create one free</a></div>
+                <!-- Demo credentials info -->
+                <div style="margin-top:16px; padding:12px; background:var(--paper2); border-radius:9px; font-size:11px; color:var(--tm); line-height:1.7;">
+                    <strong style="color:var(--ink);">Demo Accounts:</strong><br/> admin / admin &nbsp;·&nbsp; writer1 / pass &nbsp;·&nbsp; client1 / pass
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: SIGN UP
+     ============================================ -->
+    <div class="page" id="page-signup">
+        <div style="display:flex; min-height:100vh;">
+            <div class="al">
+                <div class="abrand">Digital <span>Content Writing</span></div>
+                <div class="atagline">Your voice deserves to be heard.<br/>Join our growing writer community today.</div>
+                <div class="afeats">
+                    <div class="afeat">
+                        <div class="afeat-ic">🆓</div>
+                        <div class="afeat-tx"><strong>Always Free</strong>No credit card needed.</div>
+                    </div>
+                    <div class="afeat">
+                        <div class="afeat-ic">🛡️</div>
+                        <div class="afeat-tx"><strong>Safe Community</strong>Admin-moderated platform.</div>
+                    </div>
+                    <div class="afeat">
+                        <div class="afeat-ic">📊</div>
+                        <div class="afeat-tx"><strong>Analytics</strong>Track likes, comments &amp; followers.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ar">
+                <h2 class="atitle">Create account</h2>
+                <p class="asub">Join Digital Content Writing for free</p>
+                <div id="su-msg"></div>
+                <div class="fg">
+                    <label class="fl">Username *</label>
+                    <input class="fi" id="su-u" placeholder="Choose a username" />
+                </div>
+                <div class="fg">
+                    <label class="fl">Email</label>
+                    <input class="fi" type="email" id="su-e" placeholder="your@email.com" />
+                </div>
+                <div class="fg">
+                    <label class="fl">Password *</label>
+                    <input class="fi" type="password" id="su-p" placeholder="Create a password" />
+                </div>
+                <div class="fg">
+                    <label class="fl">I am a…</label>
+                    <div class="rgrid">
+                        <div class="ropt sel" id="ro-w" onclick="pickRole('writer')">
+                            <div class="ri">✍️</div>
+                            <div class="rn">Writer</div>
+                            <div class="rd">Publish content</div>
+                        </div>
+                        <div class="ropt" id="ro-c" onclick="pickRole('client')">
+                            <div class="ri">📖</div>
+                            <div class="rn">Reader / Client</div>
+                            <div class="rd">Read &amp; hire writers</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-p" style="width:100%; justify-content:center; padding:12px;" onclick="doSignup()">
+        Create Account →
+      </button>
+                <div class="alink">Already have account? <a onclick="showPage('login')">Sign in</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: HOME
+     ============================================ -->
+    <div class="page" id="page-home">
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hbg"></div>
+            <div class="hgrid"></div>
+            <div class="hcont">
+                <div class="hbrow">✦ Premium Content Platform</div>
+                <h1>Stories that <em>Move</em><br/>the World</h1>
+                <p class="hdesc">Discover powerful articles, blogs &amp; content from expert writers. Read, connect, and collaborate.</p>
+                <div class="hbtns">
+                    <button class="btn btn-g btn-lg" onclick="showPage('explore')">Explore 45+ Posts →</button>
+                    <button class="btn btn-lg" style="background:rgba(255,255,255,.1); color:#fff; border:1.5px solid rgba(255,255,255,.22);" onclick="showPage('signup')">Start Writing</button>
+                </div>
+                <!-- Animated stats -->
+                <div class="hstats">
+                    <div>
+                        <div class="hsn" id="h-w">0</div>
+                        <div class="hsl">Writers</div>
+                    </div>
+                    <div>
+                        <div class="hsn" id="h-p">0</div>
+                        <div class="hsl">Posts</div>
+                    </div>
+                    <div>
+                        <div class="hsn" id="h-r">0</div>
+                        <div class="hsl">Readers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Posts -->
+        <section class="fsec">
+            <div class="seye">✦ Editor's Pick</div>
+            <h2 class="stitle">Featured Stories</h2>
+            <p class="ssub">Hand-picked reads from our best writers.</p>
+            <div class="fgrid" id="fg"></div>
+        </section>
+
+        <!-- Categories -->
+        <section class="catsec">
+            <div style="max-width:1060px; margin:0 auto;">
+                <div class="seye" style="color:var(--gold2);">✦ Browse Topics</div>
+                <h2 class="stitle" style="color:#fff;">Find Your Niche</h2>
+                <div class="cgrid" id="hcats"></div>
+            </div>
+        </section>
+
+        <!-- Top Writers -->
+        <section class="wsec">
+            <div class="seye">✦ Community</div>
+            <h2 class="stitle">Top Writers</h2>
+            <p class="ssub">Follow your favourite writers and never miss a story.</p>
+            <div class="wgrid" id="hwrit"></div>
+        </section>
+
+        <!-- CTA -->
+        <section class="ctasec">
+            <h2>Ready to share your story?</h2>
+            <p>Join Digital Content Writing and reach thousands of engaged readers.</p>
+            <div style="display:flex; gap:11px; justify-content:center; flex-wrap:wrap;">
+                <button class="btn btn-lg" style="background:#fff; color:var(--teal);" onclick="showPage('signup')">Join as Writer</button>
+                <button class="btn btn-lg" style="background:rgba(255,255,255,.14); color:#fff; border:1.5px solid rgba(255,255,255,.28);" onclick="showPage('explore')">Browse Content</button>
+            </div>
+        </section>
+
+        <footer class="foot" id="hfoot"></footer>
+    </div>
+
+    <!-- ============================================
+     PAGE: EXPLORE
+     ============================================ -->
+    <div class="page" id="page-explore">
+        <div class="exhero">
+            <h1>Explore Content</h1>
+            <p>45+ articles, blogs &amp; content from our community of writers</p>
+            <!-- Search bar -->
+            <div class="sbar">
+                <input id="si" placeholder="Search by title, topic, writer…" onkeydown="if(event.key==='Enter') doSearch()" />
+                <button onclick="doSearch()">Search</button>
+            </div>
+        </div>
+        <!-- Category filter pills -->
+        <div class="fbar" id="fbar"></div>
+        <!-- Type tabs -->
+        <div class="ttabs">
+            <button class="ttab active" onclick="setTTab('all',this)">All</button>
+            <button class="ttab" onclick="setTTab('article',this)">Articles</button>
+            <button class="ttab" onclick="setTTab('blog',this)">Blogs</button>
+            <button class="ttab" onclick="setTTab('content',this)">Contents</button>
+        </div>
+        <!-- Posts grid -->
+        <div class="pcon">
+            <div class="pgrid" id="exgrid"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: POST DETAIL
+     ============================================ -->
+    <div class="page" id="page-post">
+        <div style="background:var(--paper); min-height:100vh;">
+            <div id="pdwrap"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: WRITER DASHBOARD
+     ============================================ -->
+    <div class="page" id="page-dashboard">
+        <div class="dlayout">
+            <!-- Sidebar -->
+            <aside class="dsb">
+                <div class="dsbrand">Digital <span style="color:var(--gold);">Content Writing</span></div>
+                <div class="di active" id="dn-ov" onclick="showDTab('ov')"> <span class="dic">📊</span> Overview</div>
+                <div class="di" id="dn-posts" onclick="showDTab('posts')"> <span class="dic">📄</span> My Posts</div>
+                <div class="di" id="dn-create" onclick="showDTab('create')"><span class="dic">✍️</span> Create Post</div>
+                <div class="di" id="dn-reqs" onclick="showDTab('reqs')">
+                    <span class="dic">📨</span> Requests
+                    <span id="rbadge" style="display:none; background:#dc2626; color:#fff; border-radius:9px; padding:0 5px; font-size:9px; margin-left:4px;"></span>
+                </div>
+                <div class="di" onclick="showPage('profile')"><span class="dic">👤</span> Profile</div>
+            </aside>
+            <!-- Main content -->
+            <div class="dmain" id="dmain"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: CLIENT HUB
+     ============================================ -->
+    <div class="page" id="page-cdash">
+        <div style="max-width:880px; margin:0 auto; padding:32px 24px;" id="cdash"></div>
+    </div>
+
+    <!-- ============================================
+     PAGE: CHAT
+     ============================================ -->
+    <div class="page" id="page-chat">
+        <div class="clayout">
+            <!-- Sidebar - conversation list -->
+            <div class="csb">
+                <div class="csbh">💬 Messages</div>
+                <div class="clist" id="clist"></div>
+            </div>
+            <!-- Main chat area -->
+            <div class="cmain" id="cmain">
+                <div style="display:flex; align-items:center; justify-content:center; height:100%; flex-direction:column; gap:11px; color:var(--tl);">
+                    <div style="font-size:48px;">💬</div>
+                    <div>Select a conversation to start chatting</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: ADMIN PANEL
+     ============================================ -->
+    <div class="page" id="page-admin">
+        <div class="alayout">
+            <aside class="asb">
+                <div style="font-size:15px; font-weight:700; color:#fff; margin-bottom:20px; padding:0 3px;">🛡️ Admin Panel</div>
+                <div class="asbi active" id="an-u" onclick="adminTab('u')">👥 Users</div>
+                <div class="asbi" id="an-po" onclick="adminTab('po')">📄 Posts</div>
+                <div class="asbi" id="an-ch" onclick="adminTab('ch')">💬 Chats</div>
+                <div class="asbi" id="an-an" onclick="adminTab('an')">📊 Analytics</div>
+            </aside>
+            <div class="amain" id="amain"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+     PAGE: PROFILE
+     ============================================ -->
+    <div class="page" id="page-profile">
+        <div id="profwrap"></div>
+    </div>
+
+    <!-- ============================================
+     PAGE: ABOUT
+     ============================================ -->
+    <div class="page" id="page-about">
+        <div class="abhero">
+            <h1>About Digital Content Writing</h1>
+            <p>Building the most beautiful platform for writers and readers to connect, create and inspire.</p>
+            <button class="btn btn-g btn-lg" onclick="showPage('signup')">Join Free →</button>
+        </div>
+        <div class="abfeats">
+            <div class="afc">
+                <div class="afci">✍️</div>
+                <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">For Writers</h3>
+                <p style="font-size:13px; color:var(--tm); line-height:1.7;">Publish articles, blogs and content. Track readers, likes and comments in real time.</p>
+            </div>
+            <div class="afc">
+                <div class="afci">📖</div>
+                <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">For Readers</h3>
+                <p style="font-size:13px; color:var(--tm); line-height:1.7;">Discover curated content across 5 categories. Follow writers, like posts, and comment freely.</p>
+            </div>
+            <div class="afc">
+                <div class="afci">💼</div>
+                <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">For Clients</h3>
+                <p style="font-size:13px; color:var(--tm); line-height:1.7;">Hire writers via direct chat. Send engagement requests and track project progress.</p>
+            </div>
+            <div class="afc">
+                <div class="afci">💬</div>
+                <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">Built-in Chat</h3>
+                <p style="font-size:13px; color:var(--tm); line-height:1.7;">Client-writer messaging with engagement requests and deadline tracking built in.</p>
+            </div>
+            <div class="afc">
+                <div class="afci">🛡️</div>
+                <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">Admin Control</h3>
+                <p style="font-size:13px; color:var(--tm); line-height:1.7;">Full platform moderation — users, posts, chats and analytics all in one panel.</p>
+            </div>
+            <div class="afc">
+                <div class="afci">📊</div>
+                <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">Analytics</h3>
+                <p style="font-size:13px; color:var(--tm); line-height:1.7;">Detailed stats — likes, comments, follower growth for every writer on the platform.</p>
+            </div>
+        </div>
+        <footer class="foot" id="afoot"></footer>
+    </div>
+
+    <!-- ============================================
+     MODALS
+     ============================================ -->
+
+    <!-- Edit Post Modal -->
+    <div class="mov" id="m-edit">
+        <div class="mbox">
+            <button class="mclose" onclick="closeM('m-edit')">✕</button>
+            <div class="mtitle">Edit Post</div>
+            <input type="hidden" id="e-pid" />
+            <div class="fg"><label class="fl">Title</label> <input class="fi" id="e-title" /></div>
+            <div class="fg"><label class="fl">Excerpt</label> <input class="fi" id="e-exc" /></div>
+            <div class="fg"><label class="fl">Content</label> <textarea class="fi" id="e-cont" style="min-height:120px;"></textarea></div>
+            <div class="fg"><label class="fl">Category</label>
+                <select class="fi" id="e-cat">
+        <option>Business</option><option>Technology</option>
+        <option>Education</option><option>Travel</option>
+        <option>Health</option><option>Other</option>
+      </select>
+            </div>
+            <div class="fg"><label class="fl">Image URL</label> <input class="fi" id="e-img" placeholder="https://…" /></div>
+            <div class="fg"><label class="fl">Upload Image</label> <input type="file" id="e-ifile" accept="image/*" class="fi" onchange="prevEImg(this)" /></div>
+            <div id="e-iprev" style="margin-top:7px;"></div>
+            <div class="mfoot">
+                <button class="btn btn-gh btn-sm" onclick="closeM('m-edit')">Cancel</button>
+                <button class="btn btn-p  btn-sm" onclick="saveEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Likes List Modal -->
+    <div class="mov" id="m-likes">
+        <div class="mbox" style="width:360px;">
+            <button class="mclose" onclick="closeM('m-likes')">✕</button>
+            <div class="mtitle">❤️ Liked by</div>
+            <div id="likes-list"></div>
+        </div>
+    </div>
+
+    <!-- Engagement Request Modal -->
+    <div class="mov" id="m-engage">
+        <div class="mbox">
+            <button class="mclose" onclick="closeM('m-engage')">✕</button>
+            <div class="mtitle">📨 Send Engagement Request</div>
+            <input type="hidden" id="eng-wid" />
+            <div class="fg"><label class="fl">Project Title *</label> <input class="fi" id="eng-pt" placeholder="e.g. Write 5 blog posts about travel" /></div>
+            <div class="fg"><label class="fl">Description *</label> <textarea class="fi" id="eng-pd" placeholder="Describe what you need…"></textarea></div>
+            <div class="fg"><label class="fl">Deadline *</label> <input type="date" class="fi" id="eng-dl" /></div>
+            <div class="fg"><label class="fl">Budget (optional)</label> <input class="fi" id="eng-bg" placeholder="e.g. ₹2000" /></div>
+            <div class="mfoot">
+                <button class="btn btn-gh btn-sm" onclick="closeM('m-engage')">Cancel</button>
+                <button class="btn btn-g  btn-sm" onclick="sendReq()">Send Request 📨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <!-- JavaScript files -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
